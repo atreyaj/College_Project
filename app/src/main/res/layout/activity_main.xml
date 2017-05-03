@@ -10,35 +10,65 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.soumyadeeppal.collegeproject.MainActivity">
 
-    <EditText
-        android:layout_width="wrap_content"
+    <TextView
+        android:text=""
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:hint="Enter email"
-        android:layout_marginTop="19dp"
-        android:id="@+id/email"/>
+        android:layout_below="@+id/list"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="52dp"
+        android:id="@+id/tv" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:hint="Enter password"
-        android:layout_marginTop="53dp"
-        android:id="@+id/pass"
-        android:layout_marginStart="25dp"
-        android:layout_below="@+id/email"
-        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pass"
-        android:layout_alignStart="@+id/pass"
-        android:layout_marginTop="85dp"
-        android:id="@+id/register" />
+        android:gravity="center"
+        android:id="@+id/register"
+        android:layout_below="@+id/phone"
+        android:layout_marginTop="41dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="DISPLAY FIREBASE TOKEN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/display"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/register"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:hint="Enter phone number to register"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/phone"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/list"
+        android:text="List Friends"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/display"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="34dp" />
+
+    <Button
+        android:text="Know your location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mylocation"
+        android:layout_alignTop="@+id/list"
+        android:layout_alignParentEnd="true" />
+
+
 
 
 </RelativeLayout>
