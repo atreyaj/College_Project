@@ -3,15 +3,28 @@ package com.example.soumyadeeppal.collegeproject;
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,6 +39,7 @@ public class User_Screen extends AppCompatActivity {
     Contact_Loader ld;
     Cursor cursor;
     ArrayList<UserInfo> user_objects;
+    EditText search_text;
 
     ArrayList<HashMap<String,String>> contactHolder;
 
@@ -36,16 +50,41 @@ public class User_Screen extends AppCompatActivity {
         setContentView(R.layout.activity_user__screen);
         lv = (ListView) findViewById(R.id.lv);
 
+        lv.setTextFilterEnabled(true);
+
+        search_text=(EditText)findViewById(R.id.search_text);
 
 
-        ld = new Contact_Loader();
+
+
+                ld = new Contact_Loader();
 
         ld.execute();
 
 
+
+
     }
 
-/*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu,menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId())
+        {
+            case R.id.multi_send:
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*
     private void setCallLogs(Cursor managedCursor) {
         contactHolder = new ArrayList<UserInfo>();
 
@@ -139,15 +178,25 @@ public class User_Screen extends AppCompatActivity {
                         //System.out.println("Id--->" + contactid + "Number--->" + phoneNumber);
                             //hashMap.put("contactid", "" + contactid);
 
-                        ui.setName(name);
-                        ui.setPhNo(phoneNumber);
-                        System.out.println(ui.getName()+ "\t" + ui.getPhNo());
+
+
+
+                        if (phoneNumber.length()>=10) {
+                            ui.setPhNo(phoneNumber);
+                            ui.setName(name);
+                            if (image!=null)
+                                ui.setPic_path(image);
+                            if (ui!=null) {
+                                user_objects.add(ui);
+                            }
+                        }
+                        //ui.setPhNo(phoneNumber);
+
+                        System.out.println(ui.getName()+ "\t" + ui.getPhNo() +"\t" + ui.getPic_path());
                             //hashMap.put("image", "" + image);
                             // hashMap.put("email", ""+email);
 
-                        if (ui!=null) {
-                            user_objects.add(ui);
-                        }
+
 
                     }
                 } while (cursor.moveToNext());
@@ -242,10 +291,51 @@ public class User_Screen extends AppCompatActivity {
             if (user_objects != null) {
                 adapter = new UserAdapter(getBaseContext(), user_objects);
                 lv.setAdapter(adapter);
+                lv.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        SparseBooleanArray sp=lv.getCheckedItemPositions();
+                        System.out.println("No of items selected :"+sp.size());
+                    }
+                });
+                search_text.addTextChangedListener(new MyTextWatcher(adapter));
 
             } /*else {
                 lv.invalidate();
             }*/
+        }
+    }
+
+    public class MyTextWatcher implements TextWatcher
+    {
+        private UserAdapter user_adapter;
+
+        MyTextWatcher(UserAdapter adapter)
+        {
+            this.user_adapter=adapter;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count)
+        {
+            user_adapter.getFilter().filter(s.toString().toLowerCase());
+
+
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+           // user_adapter.getFilter().filter(s.toString());
+
+
         }
     }
 }

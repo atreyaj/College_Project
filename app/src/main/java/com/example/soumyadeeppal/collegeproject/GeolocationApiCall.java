@@ -19,6 +19,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -53,9 +54,9 @@ public class GeolocationApiCall {
         StringBuffer sb = new StringBuffer();
             try {
                 System.out.println("mcc" + homeNetworkMcc);
-                PARAM_STRING = "homeMobileCountryCode=" + homeNetworkMcc + "&homeMobileNetworkCode=" + homeNetworkMnc + "&radioType=" + radioType + "&carrier=" + carrierName + "&considerIp=" + considerIp + "&cellId=" +
+                PARAM_STRING = "homeMobileCountryCode=" + homeNetworkMcc + "&homeMobileNetworkCode=" + homeNetworkMnc + "&radioType=" + radioType + "&carrier=" + URLEncoder.encode(carrierName,"UTF-8") + "&considerIp=" + considerIp + "&cellId=" +
                         cellTowers.getJSONObject(0).getInt("cellId")
-                        + "&locationAreaCode=" + cellTowers.getJSONObject(0).getInt("lac") + "&mobileCountryCode="
+                        + "&locationAreaCode=" +cellTowers.getJSONObject(0).getInt("lac") + "&mobileCountryCode="
                         + cellTowers.getJSONObject(0).getInt("mcc") + "&mobileNetworkCode="
                         + cellTowers.getJSONObject(0).getInt("mnc") + "&signalStrength="
                         + cellTowers.getJSONObject(0).getInt("dbm");
@@ -65,8 +66,12 @@ public class GeolocationApiCall {
             }
 
 
-
-        CONNECTION_URL=BASE_URL+PARAM_STRING;
+        try {
+            CONNECTION_URL = BASE_URL + PARAM_STRING;
+        }catch (Exception e)
+        {
+            System.out.println(e.toString());
+        }
         System.out.println("API URL : "+CONNECTION_URL);
 
         HttpURLConnection urlConnection = null;

@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
@@ -19,6 +21,7 @@ import android.telephony.CellIdentityLte;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
+import android.telephony.CellLocation;
 import android.telephony.CellSignalStrengthGsm;
 import android.telephony.CellSignalStrengthLte;
 import android.telephony.TelephonyManager;
@@ -160,8 +163,20 @@ public class MainActivity extends AppCompatActivity {
         display_my_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KnowMyLocationAsyncTask myloc=new KnowMyLocationAsyncTask();
-                myloc.execute();
+                ConnectivityManager connMgr = (ConnectivityManager) getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo activeNetworkInfo = connMgr.getActiveNetworkInfo();
+
+                if (activeNetworkInfo != null) { // connected to the internet
+                    Toast.makeText(MainActivity.this, activeNetworkInfo.getTypeName(), Toast.LENGTH_SHORT).show();
+
+                    KnowMyLocationAsyncTask myloc = new KnowMyLocationAsyncTask();
+                    myloc.execute();
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this,"Internet Connectivity not available",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -195,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
             JSONArray cellList = new JSONArray();
 
             List<CellInfo> infos = tm.getAllCellInfo();
+            //CellLocation info = tm.getCellLocation();
 
             System.out.println("No of elements in list :" + infos.size());
             //for (int i = 0; i < infos.size(); ++i) {
@@ -263,16 +279,17 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Home Network MCC and MNC : " + mcc + " and " + mnc);
             GeolocationApiCall call = new GeolocationApiCall();
             String location_latlong="";
-            if (gsmTrue==true)
-                location_latlong=call.getLatLongString(mcc, mnc, "gsm", carrierName, true, cellList);
-            else
-                location_latlong=call.getLatLongString(mcc, mnc, "lte", carrierName, true, cellList);
+
+                if (gsmTrue == true)
+                    location_latlong = call.getLatLongString(mcc, mnc, "gsm", carrierName, true, cellList);
+                else
+                    location_latlong = call.getLatLongString(mcc, mnc, "lte", carrierName, true, cellList);
             return location_latlong;
         }
 
         @Override
         protected void onPostExecute(String s) {
-            double lat = 0.0, lng = 0.0;
+            double lat = 0.0, lng = 0.0 , accuracy=0.0;
 
             try {
 
@@ -281,6 +298,8 @@ public class MainActivity extends AppCompatActivity {
 
                 lat = location.getDouble("lat");
                 lng = location.getDouble("lng");
+                accuracy=res.getDouble("accuracy");
+
             } catch (Exception e) {
                 System.out.println("Error in Response JSON Parsing");
             }
@@ -311,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
             else
                 fullAddress = "" + address + city + state + country + postalCode;
 
-            tv.setText("Latitude :"+lat+"\n"+"Longitude :"+lng+"\n"+"Address :"+fullAddress);
+            tv.setText("Latitude :"+lat+"\n"+"Longitude :"+lng+"\n"+"Address :"+fullAddress+"\n"+"Accuracy : "+accuracy+" metres");
             //Toast.makeText(MainActivity.this, "Latitude :" + lat + "\n" + "Longitude :" + lng+"\n"+"Address : "+fullAddress, Toast.LENGTH_LONG).show();
         }
 

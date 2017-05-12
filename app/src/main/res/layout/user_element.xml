@@ -2,20 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:id="@+id/photo"
+        android:layout_alignParentLeft="true"
+        />
 
     <Button
         android:text="Share Location"
-        android:layout_width="100sp"
-        android:layout_height="wrap_content"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
         android:id="@+id/invite"
         android:layout_toRightOf="@+id/username"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentRight="true"
+
+         />
 
     <TextView
         android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:id="@+id/username"
+        android:layout_toRightOf="@+id/photo"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/photo" />
+
+
+
+
+        />
 </RelativeLayout>

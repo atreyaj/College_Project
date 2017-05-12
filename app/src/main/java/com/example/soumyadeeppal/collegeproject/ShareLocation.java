@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by Soumyadeep Pal on 12-02-2017.
@@ -32,7 +33,11 @@ public class ShareLocation {
 
     public String send() {
         String BASE_URL = "http://locationfinder.000webhostapp.com/sendSinglePush.php?";
-        String PARAM_STRING = "title="+ this.title + this.sendto_no + "&message=" + this.location_message + "&ph_no=" + this.sendto_no;
+        String PARAM_STRING="";
+        try {
+            PARAM_STRING = "title=" + URLEncoder.encode(this.title+this.sendto_no, "UTF-8") + "&message=" + URLEncoder.encode(this.location_message,"UTF-8") + "&ph_no=" + this.sendto_no;
+        }catch (Exception e)
+        {}
         String CONNECTION_URL = BASE_URL + PARAM_STRING;
 
 

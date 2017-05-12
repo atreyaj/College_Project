@@ -4,7 +4,9 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -47,6 +49,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String title = data.getString("title");
             String message=data.getString("message");
 
+            Uri gmmIntentUri = Uri.parse("geo:0,0?q="+message.substring(10));
+
+// Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+            Intent switch_to_map = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+// Make the Intent explicit by setting the Google Maps package
+            switch_to_map.setPackage("com.google.android.apps.maps");
+
+            PendingIntent mapIntent=PendingIntent.getActivity(getApplicationContext(),0,switch_to_map,PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+
+
             NotificationManager nm=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
             PendingIntent pi=PendingIntent.getActivity(getApplicationContext(),100,new Intent(MyFirebaseMessagingService.this,User_Screen.class),PendingIntent.FLAG_UPDATE_CURRENT);
@@ -55,6 +69,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(title)
                     .setContentText(message)
+                    .setContentIntent(mapIntent)
                     .build();
 
             nm.notify(100,notification);

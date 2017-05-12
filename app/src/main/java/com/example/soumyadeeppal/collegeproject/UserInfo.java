@@ -1,5 +1,7 @@
 package com.example.soumyadeeppal.collegeproject;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 /**
