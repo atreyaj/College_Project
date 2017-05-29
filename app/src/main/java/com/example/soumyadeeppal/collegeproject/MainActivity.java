@@ -51,6 +51,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     Button b; // for registration
     // UID example : SntVNXo3F2WR0WQXLFm1mXjYJCq1
     Button displayToken;
+    TextView name;
     String token;
     TextView tv;
 
@@ -81,9 +83,11 @@ public class MainActivity extends AppCompatActivity {
 
         b = (Button) findViewById(R.id.register);
 
-        displayToken = (Button) findViewById(R.id.display);
+        name=(TextView)findViewById(R.id.name);
 
-        tv = (TextView) findViewById(R.id.tv);
+        //displayToken = (Button) findViewById(R.id.display);
+
+        //tv = (TextView) findViewById(R.id.tv);
         auth = auth.getInstance();
 
         b.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 String imei_id = tm.getDeviceId();
 
                 RegisterAsyncTask obj = new RegisterAsyncTask(getBaseContext());
-                obj.execute(imei_id, ph_no, gcm_id);
+                obj.execute(imei_id, ph_no, gcm_id , ""+name.getText().toString());
 
                 /*
                 System.out.println("imei_id : "+imei_id);
@@ -113,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        displayToken.setOnClickListener(new View.OnClickListener() {
+        /*displayToken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //MyFirebaseInstanceIDService service = new MyFirebaseInstanceIDService(getBaseContext());
@@ -121,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 tv.setText("Registration Token : " + gcm_id);
                 System.out.println("Token : " + gcm_id);
             }
-        });
+        });*/
     }
 
     class RegisterAsyncTask extends AsyncTask<String, Void, String> {
@@ -140,7 +144,16 @@ public class MainActivity extends AppCompatActivity {
 
 
             String BASE_URL = "http://locationfinder.000webhostapp.com/RegisterDevice.php?";
-            String PARAM_STRING = "imei_id=" + params[0] + "&ph_no=" + params[1] + "&gcm_id=" + params[2];
+            String PARAM_STRING="";
+            try {
+                PARAM_STRING = "imei_id=" + params[0] + "&ph_no=" + params[1] + "&gcm_id=" + params[2] + "&username="+
+                        URLEncoder.encode(params[3],"UTF-8");
+
+            }catch (Exception e)
+            {
+                System.out.println(e.toString());
+            }
+
             String CONNECTION_URL = "" + BASE_URL + PARAM_STRING;
 
             System.out.println(CONNECTION_URL);

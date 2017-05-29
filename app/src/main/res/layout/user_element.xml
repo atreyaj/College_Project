@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+        >
 
     <ImageView
         android:layout_width="30sp"
@@ -17,29 +18,35 @@
         android:id="@+id/checkbox"/>
 
 
-    <Button
-        android:text="Share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/invite"
-        android:layout_toRightOf="@+id/know"
-        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_backup_black_24dp"
+        android:textColor="@android:color/white"
+        android:layout_toRightOf="@+id/get"
+        android:paddingRight="12dp"
+        android:layout_marginRight="16dp"
          />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_toRightOf="@+id/username"
-        android:text="GET LOCATION?"
-        style="?android:attr/borderlessButtonStyle"
-        android:textColor="@color/colorPrimary"
+        android:paddingRight="12dp"
+        android:layout_marginRight="16dp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/ic_cloud_download_black_24dp"
         android:id="@+id/get"
+        android:layout_marginLeft="80dp"
         />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="100sp"
         android:layout_height="wrap_content"
         android:id="@+id/username"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="4dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/photo"
         android:layout_alignParentTop="true"

@@ -32,6 +32,7 @@ import android.telephony.CellInfoLte;
 import android.telephony.CellSignalStrengthGsm;
 import android.telephony.CellSignalStrengthLte;
 import android.telephony.NeighboringCellInfo;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
@@ -48,6 +49,7 @@ import android.widget.Checkable;
 import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RemoteViews;
@@ -171,9 +173,9 @@ public class UserAdapter extends BaseAdapter implements Filterable{
 
             viewHolder.cb = (CheckBox) convertView.findViewById(R.id.checkbox);
 
-            viewHolder.invite = (Button) convertView.findViewById(R.id.invite);
+            viewHolder.invite = (ImageButton) convertView.findViewById(R.id.invite);
 
-            viewHolder.get=(Button) convertView.findViewById(R.id.get);
+            viewHolder.get=(ImageButton) convertView.findViewById(R.id.get);
 
 
 
@@ -255,6 +257,7 @@ public class UserAdapter extends BaseAdapter implements Filterable{
             });
 
             viewHolder.get.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onClick(View v) {
 
@@ -271,8 +274,12 @@ public class UserAdapter extends BaseAdapter implements Filterable{
                         Log.d("Phno:", filtered_objects.get(position).getPhNo());
                         //i.putExtra("phNo", object.get(position).getPhNo());
                         //parent.getContext().startActivity(i);
+                        String to_phNo=""+filtered_objects.get(position).getPhNo();
 
-                        new getLocationFromDatabaseAsyncTask().execute(""+filtered_objects.get(position).getPhNo(),""+tm.getDeviceId());
+                        to_phNo=(to_phNo.charAt(0)=='+')?(PhoneNumberUtils.normalizeNumber(to_phNo)).substring(3):
+                                (PhoneNumberUtils.normalizeNumber(to_phNo));
+
+                        new getLocationFromDatabaseAsyncTask().execute(""+to_phNo,""+tm.getDeviceId());
                     } else
                         Toast.makeText(c, "GSM or WIFI conectivity not available", Toast.LENGTH_LONG).show();
 
@@ -292,8 +299,8 @@ public class UserAdapter extends BaseAdapter implements Filterable{
         CheckBox cb;
         ImageView p1;
         TextView username;
-        Button invite;
-        Button get;
+        ImageButton invite;
+        ImageButton get;
     }
     class getLocationFromDatabaseAsyncTask extends AsyncTask<String,Void,String>
     {
@@ -311,7 +318,11 @@ public class UserAdapter extends BaseAdapter implements Filterable{
         protected String doInBackground(String... params) {
 
             String BASE_URL = "http://locationfinder.000webhostapp.com/getLocationFromDatabase.php?";
-            String PARAM_STRING="to_phNo=" + params[0] +"&from_imei="+params[1];
+            String PARAM_STRING="";
+            try {
+                PARAM_STRING = "to_phNo=" + URLEncoder.encode(params[0], "UTF-8") + "&from_imei=" + URLEncoder.encode(params[1], "UTF-8");
+            }catch (Exception e){}
+
             String CONNECTION_URL = BASE_URL + PARAM_STRING;
 
 
@@ -400,7 +411,7 @@ public class UserAdapter extends BaseAdapter implements Filterable{
             super.onPostExecute(s);
             dismissProgressDialog();
 
-            if (s.equals("1\n"))
+            if (s.equals("12\n"))
             {
                 Toast.makeText(UserAdapter.this.c,"You have notifications in notification panel...",Toast.LENGTH_LONG).show();
             }
