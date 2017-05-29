@@ -14,6 +14,8 @@ public class UserInfo implements Serializable {
     public String name;
     public String pic_path;
 
+    public boolean checked;
+
 
 
     public String getPhNo() {
@@ -38,6 +40,16 @@ public class UserInfo implements Serializable {
 
     public void setPic_path(String pic_path) {
         this.pic_path = pic_path;
+    }
+
+    public boolean isChecked()
+    {
+        return this.checked;
+    }
+
+    public void setChecked(boolean value)
+    {
+        this.checked=value;
     }
 
 

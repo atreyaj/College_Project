@@ -14,7 +14,7 @@
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/list"
+        android:layout_below="@+id/display"
         android:layout_alignParentStart="true"
         android:layout_marginTop="52dp"
         android:id="@+id/tv" />
@@ -48,27 +48,6 @@
         android:id="@+id/phone"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:id="@+id/list"
-        android:text="List Friends"
-        android:layout_marginTop="38dp"
-        android:layout_below="@+id/display"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="34dp" />
-
-    <Button
-        android:text="Know your location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mylocation"
-        android:layout_alignTop="@+id/list"
-        android:layout_alignParentEnd="true" />
-
-
 
 
 </RelativeLayout>

@@ -20,22 +20,31 @@ public class ShareLocation {
     String title;
     String location_message;
     String sendto_no;
+    String from_imei;
+    String lat;
+    String lng;
 
     String response;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    ShareLocation(String title, String location_message, String sendto_no) {
+    ShareLocation(String title, String location_message, String sendto_no,String from_imei,String lat,String lng) {
         this.title = title;
         this.location_message = location_message;
         this.sendto_no = (sendto_no.charAt(0)=='+')?(PhoneNumberUtils.normalizeNumber(sendto_no)).substring(3):
                 (PhoneNumberUtils.normalizeNumber(sendto_no));
+
+        this.from_imei=from_imei;
+
+        this.lat=lat;
+        this.lng=lng;
     }
 
     public String send() {
         String BASE_URL = "http://locationfinder.000webhostapp.com/sendSinglePush.php?";
         String PARAM_STRING="";
         try {
-            PARAM_STRING = "title=" + URLEncoder.encode(this.title+this.sendto_no, "UTF-8") + "&message=" + URLEncoder.encode(this.location_message,"UTF-8") + "&ph_no=" + this.sendto_no;
+            PARAM_STRING = "title=" + URLEncoder.encode(this.title+this.sendto_no, "UTF-8") + "&message=" + URLEncoder.encode(this.location_message,"UTF-8") + "&ph_no=" + this.sendto_no
+            +"&from_imei=" + URLEncoder.encode(this.from_imei,"UTF-8") + "&lat="+URLEncoder.encode(this.lat,"UTF-8") + "&lng="+URLEncoder.encode(this.lng,"UTF-8");
         }catch (Exception e)
         {}
         String CONNECTION_URL = BASE_URL + PARAM_STRING;

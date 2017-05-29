@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/multi_send"
-    android:title="MULTI SEND"
-    android:icon="@android:drawable/ic_menu_share"
-    android:showAsAction="always"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.soumyadeeppal.collegeproject.User_Screen">
+
+
+    <item android:id="@+id/multi_send"
+        android:title="MULTI SHARE"
+        android:icon="@android:drawable/ic_menu_share"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/know_my_location"
+        android:title="KNOW MY LOCATION"
+        android:icon="@android:drawable/ic_dialog_map"
+        app:showAsAction="ifRoom"/>
+
+
+
 </menu>

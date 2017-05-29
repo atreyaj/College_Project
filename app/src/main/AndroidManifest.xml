@@ -12,34 +12,34 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/location_share"
-        android:label="Location_Share"
+        android:label="Location Share"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
         <activity
             android:name=".User_Screen"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".SplashScreen">
             <meta-data
                 android:name="android.SUPPORT.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".SplashScreen" />
         </activity>
         <activity android:name=".ReportSMSStatus" />
         <activity android:name=".LocationFind" />
 
-
-        <service android:name=".MyFirebaseMessagingService"
-                 android:enabled="true"
-                 android:exported="true">
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -49,7 +49,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
     </application>
