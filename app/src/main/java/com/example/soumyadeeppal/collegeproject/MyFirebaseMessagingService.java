@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
@@ -113,8 +114,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 //Intent notificationIntent = new Intent(this, User_Screen.class);
                 //PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
 
+                Uri notification_sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
                 notification.contentView = notificationView;
                 notification.contentIntent = mapIntent;
+                notification.sound = notification_sound;
+                notification.defaults = Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND;
                 notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
                 //this is the intent that is supposed to be called when the

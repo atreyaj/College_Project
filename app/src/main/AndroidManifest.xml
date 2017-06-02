@@ -12,8 +12,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/location_share"
-        android:label="Location Share"
+        android:icon="@drawable/app_icon2"
+        android:label="WhackSpot"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SplashScreen">
@@ -31,8 +31,6 @@
                 android:name="android.SUPPORT.PARENT_ACTIVITY"
                 android:value=".SplashScreen" />
         </activity>
-        <activity android:name=".ReportSMSStatus" />
-        <activity android:name=".LocationFind" />
 
         <service
             android:name=".MyFirebaseMessagingService"

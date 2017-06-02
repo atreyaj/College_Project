@@ -7,7 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.ConnectivityManager;
@@ -95,6 +99,10 @@ public class User_Screen extends AppCompatActivity {
 
 
         getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+        BitmapDrawable background = new BitmapDrawable (BitmapFactory.decodeResource(getResources(), R.drawable.background3));
+        background.setTileModeX(Shader.TileMode.CLAMP);
+        getSupportActionBar().setBackgroundDrawable(background);
 
         c=getBaseContext();
 

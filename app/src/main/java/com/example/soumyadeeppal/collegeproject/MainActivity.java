@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         name=(TextView)findViewById(R.id.name);
 
+        getSupportActionBar().hide();
+
         //displayToken = (Button) findViewById(R.id.display);
 
         //tv = (TextView) findViewById(R.id.tv);
@@ -104,8 +106,16 @@ public class MainActivity extends AppCompatActivity {
                 String gcm_id = SharedPrefManager.getInstance(getApplicationContext()).getDeviceToken();
                 String imei_id = tm.getDeviceId();
 
-                RegisterAsyncTask obj = new RegisterAsyncTask(getBaseContext());
-                obj.execute(imei_id, ph_no, gcm_id , ""+name.getText().toString());
+                String username=""+name.getText().toString();
+
+                if (username=="" || ph_no=="")
+                {
+                    Toast.makeText(MainActivity.this,"Please enter both fields",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    RegisterAsyncTask obj = new RegisterAsyncTask(getBaseContext());
+                    obj.execute(imei_id, ph_no, gcm_id, username);
+                }
 
                 /*
                 System.out.println("imei_id : "+imei_id);

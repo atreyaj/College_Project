@@ -173,7 +173,9 @@ public class UserAdapter extends BaseAdapter implements Filterable{
 
             viewHolder.cb = (CheckBox) convertView.findViewById(R.id.checkbox);
 
-            viewHolder.invite = (ImageButton) convertView.findViewById(R.id.invite);
+            //viewHolder.invite = (ImageButton) convertView.findViewById(R.id.invite);
+
+            viewHolder.invite = (Button) convertView.findViewById(R.id.invite);
 
             viewHolder.get=(ImageButton) convertView.findViewById(R.id.get);
 
@@ -225,8 +227,10 @@ public class UserAdapter extends BaseAdapter implements Filterable{
 
             if ((filtered_objects.get(position).getPic_path()) != null) {
                 viewHolder.p1.setImageURI(Uri.parse(filtered_objects.get(position).getPic_path()));
+                viewHolder.p1.setBackgroundResource(R.drawable.circle);
             } else {
                 viewHolder.p1.setImageResource(R.mipmap.ic_launcher);
+                viewHolder.p1.setBackgroundResource(R.drawable.circle);
             }
 
 
@@ -299,7 +303,7 @@ public class UserAdapter extends BaseAdapter implements Filterable{
         CheckBox cb;
         ImageView p1;
         TextView username;
-        ImageButton invite;
+        Button invite;
         ImageButton get;
     }
     class getLocationFromDatabaseAsyncTask extends AsyncTask<String,Void,String>
@@ -561,6 +565,8 @@ public class UserAdapter extends BaseAdapter implements Filterable{
             boolean gsmTrue=false;
 
             // Network type:
+
+            /*
             int phoneTypeInt = tm.getPhoneType();
             String phoneType = null;
 
@@ -568,6 +574,8 @@ public class UserAdapter extends BaseAdapter implements Filterable{
                 phoneType = "gsm";
             else
                 phoneType = "cdma";
+
+                */
 
             /*-----Code for setting up cellTower object from Google GeolocationAPI------*/
             JSONArray cellList = new JSONArray();

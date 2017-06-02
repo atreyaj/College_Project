@@ -18,25 +18,47 @@
         android:id="@+id/checkbox"/>
 
 
+    <!--
+
     <ImageButton
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:id="@+id/invite"
         android:background="@drawable/ic_backup_black_24dp"
+        android:theme="@style/MyButton"
         android:textColor="@android:color/white"
         android:layout_toRightOf="@+id/get"
         android:paddingRight="12dp"
         android:layout_marginRight="16dp"
-         />
+        />
+
+
+        -->
+
+    <Button
+    android:layout_width="wrap_content"
+    android:layout_height="45dp"
+    android:id="@+id/invite"
+    android:text="SHARE"
+    android:theme="@style/MyButton"
+    android:textColor="@android:color/white"
+    android:layout_toRightOf="@+id/get"
+     android:layout_alignParentRight="true"
+    android:layout_marginRight="1dp"/>
+
+
+
+
+
 
     <ImageButton
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_toRightOf="@+id/username"
         android:paddingRight="12dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="2dp"
         android:textColor="@android:color/white"
-        android:background="@drawable/ic_cloud_download_black_24dp"
+        android:background="@drawable/get"
         android:id="@+id/get"
         android:layout_marginLeft="80dp"
         />
@@ -46,6 +68,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/username"
         android:textColor="@android:color/white"
+        android:textStyle="bold"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/photo"

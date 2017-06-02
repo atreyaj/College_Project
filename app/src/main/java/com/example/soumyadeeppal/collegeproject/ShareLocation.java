@@ -50,7 +50,9 @@ public class ShareLocation {
         String CONNECTION_URL = BASE_URL + PARAM_STRING;
 
 
-        System.out.println("Share location URL : " + CONNECTION_URL);
+        System.out.println("Share lo" +
+                "" +
+                "cation URL : " + CONNECTION_URL);
 
         StringBuffer sb = new StringBuffer();
 
